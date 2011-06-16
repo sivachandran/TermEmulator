@@ -1,0 +1,9 @@
+TermEmulator v1.0
+http://sourceforge.net/projects/termemulator
+siva.chandran.p@gmail.com
+
+TermEmulator is pure python module which provides terminal emulation for VT100 
+terminal programs. It handles V100 special characters and most important escape
+sequences. It also handles graphics rendition which specifies text 
+style(i.e. bold, italics), foreground color and background color. The handled 
+escape sequences are CUU, CUD, CUF, CUB, CHA, CUP, ED, EL, VPA and SGR.
