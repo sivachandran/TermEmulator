@@ -1,0 +1,14 @@
+Changelog
+=========
+
+1.0.1 (unreleased)
+------------------
+
+- Eggified 
+  [gotcha]
+
+1.0 (2008-04-18)
+----------------
+
+- First release (as .tgz)
+  [sivachandran]
