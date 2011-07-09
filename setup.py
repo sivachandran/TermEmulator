@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.0'
+version = '1.0.1'
 
 long_description = (file('README.rst').read() +
     '\n\n' + file('HISTORY.txt').read())
