@@ -1,10 +1,11 @@
 Changelog
 =========
 
-1.0.2 (unreleased)
+1.0.2 (2011-07-11)
 ------------------
 
-- Nothing changed yet.
+- Fix broken egg 
+  [gotcha]
 
 
 1.0.1 (2011-07-09)
