@@ -285,7 +285,7 @@ class V102Terminal:
         """
         Clears the entire terminal screen
         """
-        ClearRect(0, 0, self.rows - 1, self.cols - 1)
+        self.ClearRect(0, 0, self.rows - 1, self.cols - 1)
         
     def ClearRect(self, startRow, startCol, endRow, endCol):
         """
