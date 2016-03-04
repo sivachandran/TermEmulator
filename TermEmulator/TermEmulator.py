@@ -342,7 +342,7 @@ class V102Terminal:
         if row < 0 or row >= self.rows:
             return None
         
-        if cols < 0 or col >= self.cols:
+        if col < 0 or col >= self.cols:
             return None
         
         return self.screen[row][col]
