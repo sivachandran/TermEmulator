@@ -28,6 +28,8 @@ and background color. The handled escape sequences are CUU, CUD, CUF, CUB, CHA,
 CUP, ED, EL, VPA and SGR.
 """
 
+from __future__ import print_function
+
 import sys
 import os
 import pty
@@ -161,17 +163,17 @@ class V102Terminal:
         self.scrRendition = []
         
         # current rendition
-        self.curRendition = 0L
-        
+        self.curRendition = 0
+
         # list of dirty lines since last call to GetDirtyLines
         self.isLineDirty = []
         
         for i in range(rows):
-            line = array('c')
+            line = array('u')
             rendition = array('L')
             
             for j in range(cols):
-                line.append(' ')
+                line.append(u' ')
                 rendition.append(0)
             
             self.screen.append(line)
@@ -248,11 +250,11 @@ class V102Terminal:
         elif rows > self.rows:
             # add blank rows at bottom
             for i in range(rows - self.rows):
-                line = array('c')
+                line = array('u')
                 rendition = array('L')
                 
                 for j in range(self.cols):
-                    line.append(' ')
+                    line.append(u' ')
                     rendition.append(0)
                 
                 self.screen.append(line)
@@ -269,7 +271,7 @@ class V102Terminal:
             # add cols at right
             for i in range(self.rows):
                 for j in range(cols - self.cols):
-                    self.screen[i].append(' ')
+                    self.screen[i].append(u' ')
                     self.scrRendition[i].append(0)
         
         self.rows = rows
@@ -477,7 +479,7 @@ class V102Terminal:
                 if ch in self.printableChars:
                     self.__PushChar(ch)
                 else:
-                    print "WARNING: Unsupported character %s:%d" % (ch, ascii)
+                    print("WARNING: Unsupported character %s:%d" % (ch, ascii))
                 index += 1
         
         # update the dirty lines
@@ -504,7 +506,7 @@ class V102Terminal:
             
         line = self.screen.pop(0)
         for i in range(self.cols):
-            line[i] = ' '
+            line[i] = u' '
         self.screen.append(line)
         
         rendition = self.scrRendition.pop(0)
@@ -568,8 +570,8 @@ class V102Terminal:
                 # final char
                 return (index + 1, chr(ascii), interChars)
             else:
-                print "Unexpected characters in escape sequence ", ch
-            
+                print("Unexpected characters in escape sequence %s" % ch)
+
             index += 1
         
         # the escape sequence is not complete, inform this to caller by giving
@@ -750,7 +752,7 @@ class V102Terminal:
         Handler for escape sequence CHA 
         """
         if params == None:
-            print "WARNING: CHA without parameter"
+            print("WARNING: CHA without parameter")
             return
         
         col = int(params)
@@ -760,7 +762,7 @@ class V102Terminal:
         if col >= 0 and col < self.cols:
             self.curX = col
         else:
-            print "WARNING: CHA column out of boundary"
+            print("WARNING: CHA column out of boundary")
 
     def __OnEscSeqCUP(self, params):
         """
@@ -775,9 +777,9 @@ class V102Terminal:
                 y = int(values[0]) - 1
                 x = int(values[1]) - 1
             else:
-                print "WARNING: escape sequence CUP has invalid parameters"
-                return 
-        
+                print("WARNING: escape sequence CUP has invalid parameters")
+                return
+
         if x < 0:
             x = 0
         elif x >= self.cols:
@@ -806,8 +808,8 @@ class V102Terminal:
         elif n == 2:
             self.ClearRect(0, 0, self.rows - 1, self.cols - 1)
         else:
-            print "WARNING: escape sequence ED has invalid parameter"
-            
+            print("WARNING: escape sequence ED has invalid parameter")
+
     def __OnEscSeqEL(self, params):
         """
         Handler for escape sequence EL
@@ -823,14 +825,14 @@ class V102Terminal:
         elif n == 2:
             self.ClearRect(self.curY, 0, self.curY, self.cols - 1)
         else:
-            print "WARNING: escape sequence EL has invalid parameter"
+            print("WARNING: escape sequence EL has invalid parameter")
 
     def __OnEscSeqVPA(self, params):
         """
         Handler for escape sequence VPA
         """
         if params == None:
-            print "WARNING: VPA without parameter"
+            print("WARNING: VPA without parameter")
             return
         
         row = int(params)
@@ -840,8 +842,8 @@ class V102Terminal:
         if row >= 0 and row < self.rows:
             self.curY = row
         else:
-            print "WARNING: VPA line no. out of boundary"
-            
+            print("WARNING: VPA line no. out of boundary")
+
     def __OnEscSeqSGR(self, params):
         """
         Handler for escape sequence SGR
@@ -852,7 +854,7 @@ class V102Terminal:
                 irendition = int(rendition)
                 if irendition == 0:
                     # reset rendition
-                    self.curRendition = 0L
+                    self.curRendition = 0
                 elif irendition > 0 and irendition < 9:
                     # style
                     self.curRendition |= (1 << (irendition - 1))
@@ -872,9 +874,7 @@ class V102Terminal:
                     # set default background color
                     self.curRendition &= 0xffff0fff
                 else:
-                    print "WARNING: Unsupported rendition", irendition
+                    print("WARNING: Unsupported rendition %s" % irendition)
         else:
             # reset rendition
-            self.curRendition = 0L
-            
-        #print "Current attribute", self.curAttrib
+            self.curRendition = 0

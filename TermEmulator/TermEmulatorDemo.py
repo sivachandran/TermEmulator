@@ -421,7 +421,7 @@ class TermEmulatorDemo(wx.Frame):
         #PrintStringAsAscii(output)
         #print ""
         
-        self.termEmulator.ProcessInput(output)
+        self.termEmulator.ProcessInput(output.decode())
 
         # resets text control's foreground and background
         self.txtCtrlTerminal.SetForegroundColour((0, 0, 0))
