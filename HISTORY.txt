@@ -4,7 +4,10 @@ Changelog
 1.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Python 3 support
+  [ajdavis]
+- Handle UTF-8 characters
+  [ajdavis]
 
 
 1.0.2 (2011-07-11)
