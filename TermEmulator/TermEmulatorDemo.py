@@ -82,7 +82,7 @@ class TermEmulatorDemo(wx.Frame):
                                            style = wx.TE_MULTILINE 
                                                    | wx.TE_DONTWRAP)
         font = wx.Font(10, wx.FONTFAMILY_TELETYPE, wx.FONTSTYLE_NORMAL,
-                       wx.FONTSTYLE_NORMAL, False)
+                       wx.FONTWEIGHT_NORMAL, False)
         self.txtCtrlTerminal.SetFont(font)
         
         self.txtCtrlTerminal.Bind(wx.EVT_CHAR, self.OnTerminalChar,
