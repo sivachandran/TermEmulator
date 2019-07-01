@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+from __future__ import print_function
+
 import os
 import sys
 import pty
@@ -20,9 +22,9 @@ def PrintStringAsAscii(s):
     import string
     for ch in s:
         if ch in string.printable:
-            print ch,
+            print(ch, end="")
         else:
-            print ord(ch), 
+            print(ord(ch), end="")
 
 class TermEmulatorDemo(wx.Frame):
     def __init__(self):
@@ -165,7 +167,7 @@ class TermEmulatorDemo(wx.Frame):
         if processPid == 0: # child process
             os.execl(path, *arglist)
         
-        print "Child process pid", processPid
+        print("Child process pid {}".format(processPid))
         
         # Sets raw mode
         #tty.setraw(processIO)
@@ -225,9 +227,9 @@ class TermEmulatorDemo(wx.Frame):
             self.isRunning = False
             wx.CallAfter(self.ReadProcessOutput)
             wx.CallAfter(self.UpdateUI)
-            print "Process exited"
+            print("Process exited")
             
-        print "Notifier thread exited"
+        print("Notifier thread exited")
         
     def SetTerminalRenditionStyle(self, style):
         fontStyle = wx.FONTSTYLE_NORMAL
@@ -351,7 +353,7 @@ class TermEmulatorDemo(wx.Frame):
                     
                     if curStyle != style:
                         curStyle = style
-                        #print "Setting style", curStyle
+                        #print("Setting style {}".format(curStyle))
                         if style == 0:
                             self.txtCtrlTerminal.SetForegroundColour((0, 0, 0))
                             self.txtCtrlTerminal.SetBackgroundColour((255, 255, 255))
@@ -365,12 +367,12 @@ class TermEmulatorDemo(wx.Frame):
                         
                     if curFgColor != fgcolor:
                         curFgColor = fgcolor
-                        #print "Setting foreground", curFgColor
+                        #print("Setting foreground {}".format(curFgColor))
                         self.SetTerminalRenditionForeground(curFgColor)
                         
                     if curBgColor != bgcolor:
                         curBgColor = bgcolor
-                        #print "Setting background", curBgColor
+                        #print("Setting background {}".format(curBgColor))
                         self.SetTerminalRenditionBackground(curBgColor)
                 
                 text += screen[row][col]
@@ -401,7 +403,7 @@ class TermEmulatorDemo(wx.Frame):
         self.SetTitle(title)
         
     def OnTermEmulatorUnhandledEscSeq(self, escSeq):
-        print "Unhandled escape sequence: [" + escSeq
+        print("Unhandled escape sequence: [{}".format(escSeq))
         
     def ReadProcessOutput(self):
         output = ""
@@ -417,9 +419,9 @@ class TermEmulatorDemo(wx.Frame):
         except:
             output = ""
          
-        #print "Received: ",
+        #print("Received: ", end="")
         #PrintStringAsAscii(output)
-        #print ""
+        #print("")
         
         self.termEmulator.ProcessInput(output.decode())
 
@@ -430,11 +432,11 @@ class TermEmulatorDemo(wx.Frame):
         self.waitingForOutput = True
         
     def OnTerminalKeyDown(self, event):
-        #print "KeyDown", event.GetKeyCode()
+        #print("KeyDown {}".format(event.GetKeyCode()))
         event.Skip()
 
     def OnTerminalKeyUp(self, event):
-        #print "KeyUp", event.GetKeyCode()
+        #print("KeyUp {}".format(event.GetKeyCode()))
         event.Skip()
         
     def OnTerminalChar(self, event):
@@ -442,7 +444,7 @@ class TermEmulatorDemo(wx.Frame):
             return
             
         ascii = event.GetKeyCode()
-        #print "ASCII =", ascii
+        #print("ASCII = {}".format(ascii))
         
         keystrokes = None
         
@@ -458,9 +460,9 @@ class TermEmulatorDemo(wx.Frame):
             keystrokes = "\033[D"
 
         if keystrokes != None:
-            #print "Sending:",
+            #print("Sending:", end="")
             #PrintStringAsAscii(keystrokes)
-            #print ""            
+            #print("")
             os.write(self.processIO, keystrokes)
                 
     def OnClose(self, event):
