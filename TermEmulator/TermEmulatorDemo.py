@@ -406,7 +406,7 @@ class TermEmulatorDemo(wx.Frame):
         print("Unhandled escape sequence: [{}".format(escSeq))
         
     def ReadProcessOutput(self):
-        output = ""
+        output = bytes("",'utf8')
         
         try:
             while True:
@@ -417,7 +417,7 @@ class TermEmulatorDemo(wx.Frame):
                 if datalen < 512:
                     break
         except:
-            output = ""
+            output = bytes("",'utf8')
          
         #print("Received: ", end="")
         #PrintStringAsAscii(output)
@@ -463,7 +463,7 @@ class TermEmulatorDemo(wx.Frame):
             #print("Sending:", end="")
             #PrintStringAsAscii(keystrokes)
             #print("")
-            os.write(self.processIO, keystrokes)
+            os.write(self.processIO, bytes(keystrokes,'utf-8'))
                 
     def OnClose(self, event):
         if self.isRunning:
