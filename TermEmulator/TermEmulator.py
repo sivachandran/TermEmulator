@@ -260,7 +260,9 @@ class V102Terminal:
                 self.screen.append(line)
                 self.scrRendition.append(rendition)
                 self.isLineDirty.append(False)
-                
+
+        self.rows = rows
+
         if cols < self.cols:
             # remove cols at right
             for i in range(self.rows):
@@ -274,7 +276,6 @@ class V102Terminal:
                     self.screen[i].append(u' ')
                     self.scrRendition[i].append(0)
         
-        self.rows = rows
         self.cols = cols
         
     def GetCursorPos(self):
